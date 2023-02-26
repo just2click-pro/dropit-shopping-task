@@ -46,3 +46,4 @@
   - I did add and enabled the store/redux to update the number of products but ut doesn't reflects yet in the cart page
 
   - All in all it was fun assignment to do and I tried to use the same coding styles that you're using
+  - I've added the missing .gitignore
