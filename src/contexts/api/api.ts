@@ -1,4 +1,4 @@
-import {CatalogProduct} from "../../modules/product/types";
+import { CatalogProduct } from "../../modules/product/types";
 
 const API = {
 	product: {

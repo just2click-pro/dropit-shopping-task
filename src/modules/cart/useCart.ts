@@ -5,22 +5,22 @@ import useFlag from "../../tools/hooks/useFlag"
 
 import { CatalogProduct } from "../product/types"
 
-import useCatalogTable from "../catalog/useCatalogTable"
+import useCartTable from "./useCartTable"
 
-import { useDispatch, useSelector } from "react-redux"
-import { addProductToCart } from "../../store/cartItemsSlice"
+import { useDispatch } from "react-redux"
+import { removeProductFromCart } from "../../store/cartItemsSlice"
 
 const useCart = () => {
   const [products, setProducts] = useState<CatalogProduct[]>([])
-  const [isLoading, onStartLoading, onEndLoading] = useFlag(true)
+  const [isLoading, onEndLoading] = useFlag(true)
   const dispatch = useDispatch()
 
-  const handleAddProductToCart = useCallback((product: CatalogProduct) => {
-    dispatch(addProductToCart(product));
-  }, []);
+  const handleRemoveItemFromCart = useCallback((product: CatalogProduct) => {
+    dispatch(removeProductFromCart(product));
+  }, [])
 
-  const { columns, getKeyRow } = useCatalogTable({
-    onAddItem: handleAddProductToCart,
+  const { columns, getKeyRow } = useCartTable({
+    onRemoveItem: handleRemoveItemFromCart,
   });
 
   useEffect(

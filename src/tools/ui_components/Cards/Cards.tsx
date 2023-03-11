@@ -1,23 +1,23 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { useDispatch } from "react-redux"  
 
 import {
     Box,
     Card,
     CardActions,
-    CardContent,
     CardMedia,
-    Paper,
     Grid,
-    styled,
-    Tooltip,
     Typography,
+    IconButton,
   } from "@mui/material";
 import { makeStyles } from '@mui/styles'
-  
-import { AddToCartIcon } from "../../../tools/icons"
 
 import { GetKeyRow } from "../types"
+import { Tooltip } from "../../../tools/ui_components/"
+import { AddToCartIcon } from "../../../tools/icons"
+
 import { CatalogProduct } from '../../../modules/product/types'
+import { addProductToCart } from '../../../store/cartItemsSlice'
 
 interface Props<Item> {
     data: Item[];
@@ -65,12 +65,17 @@ const useStyles = makeStyles({
     }
 })
 
-const onAddItem = (item: CatalogProduct) => {
-    console.log("*** item? ", item)
-}
-
-  function Cards<Item>({ data }: Props<CatalogProduct>) {
+  function Cards<Item>({ data }: Props<CatalogProduct>, isCart: boolean = false) {
     const classes = useStyles()
+    const dispatch = useDispatch()
+
+    const onAddItem = (item: CatalogProduct) => {
+        handleAddProductToCart(item)
+    }    
+
+    const handleAddProductToCart = useCallback((product: CatalogProduct) => {
+        dispatch(addProductToCart(product));
+    }, [])
 
     return (
         <>
@@ -78,36 +83,38 @@ const onAddItem = (item: CatalogProduct) => {
                 <Card className={classes.root} style={{ borderRadius: '8px', width: "100%" }} variant="outlined">
                     <Grid container>
                         <Grid item xs={2}>
-                            <Box className={classes.mediaWraaper}>
-                                <CardMedia
-                                    component='img'
-                                    className={classes.media}
-                                    image={item.image}
-                                    alt={item.title}
-                                    sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }}
-                                    />
+                            <Box sx={{ p: 2 }}>
+                                <Box className={classes.mediaWraaper}>
+                                    <CardMedia
+                                        component='img'
+                                        className={classes.media}
+                                        image={item.image}
+                                        alt={item.title}
+                                        sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }}
+                                        />
+                                </Box>
                             </Box>
                         </Grid>
                         <Grid item xs={8}>
-                            <CardContent>
-                                <Typography component='div'>
+                            <Box sx={{ p: 2 }}>
+                                <Typography variant='body1'>
                                     {item.id}
                                 </Typography>
-                                <Typography component='div' className={classes.contentLine}>
+                                <Typography variant='body1' className={classes.contentLine}>
                                     {item.title}
                                 </Typography>
-                                <Typography component='div'>
-                                    ${item.price}
+                                <Typography variant='body1'>
+                                    {item.price}
                                 </Typography>                                                              
-                            </CardContent>                            
+                            </Box>                            
                         </Grid>           
                         <Grid item xs={2}>
                             <CardActions className={classes.actions}>
-                                <div style={{ cursor: "pointer" }} onClick={() => onAddItem(item)}>
+                                <IconButton onClick={() => onAddItem(item)}>
                                     <Tooltip title={"Add to Cart"}>
                                         <AddToCartIcon />
                                     </Tooltip>
-                                </div>
+                                </IconButton>
                             </CardActions>
                         </Grid>  
                     </Grid>  
@@ -117,5 +124,5 @@ const onAddItem = (item: CatalogProduct) => {
     );
   }
   
-  export default Cards;
+  export default Cards
   

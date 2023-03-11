@@ -1,18 +1,31 @@
-import { Tooltip } from "@mui/material"
 import React, { useCallback, useMemo } from "react"
+import { IconButton, Box, Button, Typography } from "@mui/material"
 
+import { useDispatch } from "react-redux"  
 import { GetKeyRow, TableColumn } from "../../tools/ui_components/types"
-import { AddToCartIcon } from "../../tools/icons"
+import { MinusIcon, PlusIcon, RemoveIcon } from "../../tools/icons"
+import { Tooltip } from "../../tools/ui_components/"
+
+import { increaseProductQuantity, decreaseProductQuantity } from '../../store/cartItemsSlice'
+
 
 import { CatalogProduct } from "../product/types"
 
 interface Props {
   onRemoveItem: (item: CatalogProduct) => void
-  onAddItemsCount: (item: CatalogProduct) => void
-  onRemoveItemsCount: (item: CatalogProduct) => void
 }
 
-function useCaartTable({ onRemoveItem, onAddItemsCount, onRemoveItemsCount }: Props) {
+function useCaartTable({ onRemoveItem }: Props) {
+  const dispatch = useDispatch()
+
+  const handleDecrement = useCallback((item: CatalogProduct) => {
+      dispatch(decreaseProductQuantity(item))
+  }, [dispatch])
+
+  const handleIncrement = useCallback((item: CatalogProduct) => {
+      dispatch(increaseProductQuantity(item))
+  }, [dispatch])      
+
   const columns: TableColumn<CatalogProduct>[] = useMemo(
     () => [
       {
@@ -37,28 +50,57 @@ function useCaartTable({ onRemoveItem, onAddItemsCount, onRemoveItemsCount }: Pr
         renderCell: (item) => <a>${item.price}</a>,
       },
       {
-        key: "quentity",
-        title: "Quentity",
+        key: "quantity",
+        title: "Quantity",
         renderCell: (item) => <a>{item.quantity}</a>,
-      },      
+      },
+      {
+        key: "plus_minus",
+        title: "Quantity",
+        renderCell: (item) => (
+          <Box display="flex" alignItems="center">
+            <Button onClick={e => handleDecrement(item)} 
+              sx={{ 
+                background: "#F5F5F5", 
+                borderTopLeftRadius: "16px",  
+                borderBottomLeftRadius: "16px",
+                maxWidth: "32px",
+              }}>
+                <MinusIcon />
+            </Button>
+            <Typography variant='body1' component='span' sx={{ py: 0.75, background: "#F5F5F5",  }}>
+                { item.quantity }
+            </Typography>
+            <Button onClick={e => handleIncrement(item)}
+              sx={{ 
+                background: "#F5F5F5", 
+                borderTopRightRadius: "16px",  
+                borderBottomRightRadius: "16px",
+                maxWidth: "32px",
+              }}>              
+                <PlusIcon />
+            </Button>            
+          </Box>
+        )
+      },     
       {
         key: "total",
         title: "Total",
-        renderCell: (item) => <a>{item.price * item.quantity}</a>,
+        renderCell: (item) => <a>${item.price * item.quantity}</a>,
       },            
       {
         key: "action",
         title: "",
         renderCell: (item) => (
-          <div style={{ cursor: "pointer" }} onClick={() => onRemoveItem(item)}>
+          <IconButton onClick={() => onRemoveItem(item)}>
             <Tooltip title={"Remove from cart"}>
-              <AddToCartIcon />
+              <RemoveIcon />
             </Tooltip>
-          </div>
+          </IconButton>
         ),
       },
     ],
-    [onRemoveItem, onAddItemsCount, onRemoveItemsCount]
+    [onRemoveItem]
   );
 
   const getKeyRow: GetKeyRow<CatalogProduct> = useCallback(

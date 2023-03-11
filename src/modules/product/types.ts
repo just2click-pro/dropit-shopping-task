@@ -4,7 +4,8 @@ export interface CatalogProduct {
   image: string;
   price: number;
   category: string;
-  quantity: number
+  quantity: number;
+  plus_minus?: number;
 }
 
 export interface ProductDetails extends CatalogProduct {

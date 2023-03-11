@@ -7,21 +7,21 @@ import { CatalogProduct } from "../product/types"
 
 import useCatalogTable from "./useCatalogTable"
 
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { addProductToCart } from "../../store/cartItemsSlice"
 
 const useCatalog = () => {
   const [products, setProducts] = useState<CatalogProduct[]>([])
-  const [isLoading, onStartLoading, onEndLoading] = useFlag(true)
+  const [isLoading, onEndLoading] = useFlag(true)
   const dispatch = useDispatch()
 
   const handleAddProductToCart = useCallback((product: CatalogProduct) => {
     dispatch(addProductToCart(product));
-  }, []);
+  }, [])
 
   const { columns, getKeyRow } = useCatalogTable({
     onAddItem: handleAddProductToCart,
-  });
+  })
 
   useEffect(
     () => {

@@ -35,7 +35,8 @@ function Table<Item>({ data, columns, getKeyRow }: Props<Item>) {
         <TableBody>
           {data.map((item) => (
             <TableRow key={getKeyRow(item)}>
-              {columns.map(({ key, width, renderCell }) => (
+              {
+              columns.map(({ key, width, renderCell }) => (
                 <TableCell key={key.toString()} width={width}>
                   {renderCell(item)}
                 </TableCell>

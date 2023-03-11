@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import store from "./store"
 import "./index.css";
 
-import AppRouter from "./contexts/navigation/AppRouter";
+import AppRouter from "./contexts/navigation/AppRouter"
 
 const App = () => {
   return (
@@ -15,4 +15,4 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"))

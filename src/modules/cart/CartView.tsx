@@ -1,30 +1,50 @@
-import React, { ChangeEvent, useEffect, useState, useRef } from "react";
+import React from "react"
 
-import { LoadingSpinner, Table, Cards } from "../../tools/ui_components";
+import { useSelector } from "react-redux"
+import { useHistory } from "react-router-dom"
+import { IconButton } from '@mui/material'
 
-import useCart from "./useCart";
-import StyledCartView from "./StyledCartView";
-import { CatalogProduct } from '../product/types';
+import useCart from "./useCart"
+import StyledCartView from "./StyledCartView"
+
+
+import { BackIcon } from "../../tools/icons"
+import { Cards, LoadingSpinner, Table, Tooltip, Summary } from "../../tools/ui_components"
 
 const CartView = () => {
-  const { isLoading, products, columns, getKeyRow } = useCart();
-  const [productsList, setProductsList] = useState<CatalogProduct[]>([])
+  const history = useHistory();
 
-  
-  return (
-    <StyledCartView>
-      <div className="CartView__header">
-        <div className="CartView__header_text">Cart Page</div>
-      </div>
+  const { isLoading, columns, getKeyRow } = useCart();
+  const itemsInCart = useSelector((state: any) => state.cartItems)
 
-      <div className="CartView__grid_cards">
-        <Cards data={productsList} getKeyRow={getKeyRow} />
-      </div>
+  const cartColumns = columns.filter(columns => columns.key !== 'quantity')
 
-      <div className="CartView__grid">
-        <Table data={productsList} columns={columns} getKeyRow={getKeyRow} />
-      </div>      
+    return (
+      <StyledCartView>
+        <div className="CartView__header">
+          <div className="CartView__header_text">
+            <IconButton onClick={() => history.push("/catalog")} >
+              <Tooltip title={"Back to catalog"}>
+                <BackIcon />
+              </Tooltip>
+            </IconButton>
+            Your Cart
+          </div>
+        </div>
 
+        <div className="CartView__grid_cards">
+          <Cards data={itemsInCart} getKeyRow={getKeyRow} />
+        </div>
+
+        <div className="CartView__grid">
+          <div className="CartView__grid_table">
+            <Table data={itemsInCart} columns={cartColumns} getKeyRow={getKeyRow} />
+          </div>
+          <div className="CartView__grid_summary">
+            <Summary itemsInCart={itemsInCart} />
+          </div>
+
+        </div>      
       <LoadingSpinner isVisible={isLoading} />
     </StyledCartView>
   );
