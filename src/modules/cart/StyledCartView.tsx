@@ -76,10 +76,16 @@ const StyledCartView = styled.div`
 
     @media screen and (max-width: 599px) {
       width: 328px;
+      .CartView__grid_summary {
+        display: none
+      }    
     }
 
     @media screen and (min-width: 600px) and (max-width: 904px) {
       width: 534px;
+      .CartView__grid_summary {
+        display: none
+      }          
     }
 
     @media screen and (min-width: 905px) and (max-width: 1239px) {
@@ -122,10 +128,6 @@ const StyledCartView = styled.div`
       cursor: pointer;
     }      
   }
-
-  .CartView__grid_summary {
-  }
-
 `;
 
 export default StyledCartView;

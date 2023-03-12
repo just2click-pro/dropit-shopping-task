@@ -12,7 +12,7 @@ import { addProductToCart } from "../../store/cartItemsSlice"
 
 const useCatalog = () => {
   const [products, setProducts] = useState<CatalogProduct[]>([])
-  const [isLoading, onEndLoading] = useFlag(true)
+  const [isLoading, onStartLoading, onEndLoading] = useFlag(true)
   const dispatch = useDispatch()
 
   const handleAddProductToCart = useCallback((product: CatalogProduct) => {

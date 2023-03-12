@@ -28,7 +28,7 @@ const CatalogView = () => {
         product.title.includes(searchPhrase))
 
       setProductsList(filteredProducts)
-  },[searchPhrase, products])
+  },[searchPhrase])
 
   useEffect(() => {
     setProductsList(products)

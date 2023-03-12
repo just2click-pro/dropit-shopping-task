@@ -12,7 +12,7 @@ import { removeProductFromCart } from "../../store/cartItemsSlice"
 
 const useCart = () => {
   const [products, setProducts] = useState<CatalogProduct[]>([])
-  const [isLoading, onEndLoading] = useFlag(true)
+  const [isLoading, onStartLoading, onEndLoading] = useFlag(true)
   const dispatch = useDispatch()
 
   const handleRemoveItemFromCart = useCallback((product: CatalogProduct) => {
