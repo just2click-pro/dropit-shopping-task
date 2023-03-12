@@ -48,7 +48,7 @@ const CatalogView = () => {
       </div>
 
       <div className="CatalogView__grid_cards">
-        <Cards data={productsList} getKeyRow={getKeyRow} />
+        <Cards data={productsList} isCart={false} />
       </div>
 
       <div className="CatalogView__grid">

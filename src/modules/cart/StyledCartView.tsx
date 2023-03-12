@@ -48,11 +48,13 @@ const StyledCartView = styled.div`
     margin: 8px 24px;
 
     @media screen and (max-width: 599px) {
-      width: 328px;
+      width: 378px;
+      margin: 24px auto;
     }
 
     @media screen and (min-width: 600px) and (max-width: 904px) {
       width: 534px;
+      margin: 24px auto;
     }
   
     @media screen and (min-width: 905px) and (max-width: 1920px) {
@@ -83,16 +85,20 @@ const StyledCartView = styled.div`
 
     @media screen and (min-width: 600px) and (max-width: 904px) {
       width: 534px;
+      margin: 16px auto;
+      background-color: tomato;
       .CartView__grid_summary {
         display: none
       }          
     }
 
     @media screen and (min-width: 905px) and (max-width: 1239px) {
+      margin: 16px auto;
       width: 840px;
     }    
     
     @media screen and (min-width: 1440px) and (max-width: 1647px) {
+      margin: 16px auto;
       width: 1040px;
     }        
 

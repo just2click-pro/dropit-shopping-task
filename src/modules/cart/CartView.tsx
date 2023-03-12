@@ -33,7 +33,7 @@ const CartView = () => {
         </div>
 
         <div className="CartView__grid_cards">
-          <Cards data={itemsInCart} getKeyRow={getKeyRow} />
+          <Cards data={itemsInCart} isCart={true} />
           <div className="CartView__grid_summary">
             <Summary itemsInCart={itemsInCart} />
           </div>
