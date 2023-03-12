@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo } from "react"
-import { IconButton, Box, Button, Typography } from "@mui/material"
+import { IconButton } from "@mui/material"
 
 import { useDispatch } from "react-redux"  
 import { GetKeyRow, TableColumn } from "../../tools/ui_components/types"
-import { MinusIcon, PlusIcon, RemoveIcon } from "../../tools/icons"
-import { Tooltip } from "../../tools/ui_components/"
+import { RemoveIcon } from "../../tools/icons"
+import { PlusMinus, Tooltip } from "../../tools/ui_components/"
 
 import { increaseProductQuantity, decreaseProductQuantity } from '../../store/cartItemsSlice'
 
@@ -58,35 +58,15 @@ function useCaartTable({ onRemoveItem }: Props) {
         key: "plus_minus",
         title: "Quantity",
         renderCell: (item) => (
-          <Box display="flex" alignItems="center">
-            <Button onClick={e => handleDecrement(item)} 
-              sx={{ 
-                background: "#F5F5F5", 
-                borderTopLeftRadius: "16px",  
-                borderBottomLeftRadius: "16px",
-                maxWidth: "32px",
-              }}>
-                <MinusIcon />
-            </Button>
-            <Typography variant='body1' component='span' sx={{ py: 0.75, background: "#F5F5F5",  }}>
-                { item.quantity }
-            </Typography>
-            <Button onClick={e => handleIncrement(item)}
-              sx={{ 
-                background: "#F5F5F5", 
-                borderTopRightRadius: "16px",  
-                borderBottomRightRadius: "16px",
-                maxWidth: "32px",
-              }}>              
-                <PlusIcon />
-            </Button>            
-          </Box>
+          <>
+            <PlusMinus item={item} />
+          </>
         )
       },     
       {
         key: "total",
         title: "Total",
-        renderCell: (item) => <a>${item.price * item.quantity}</a>,
+        renderCell: (item) => <a>${(item.price * item.quantity).toFixed(2)}</a>,
       },            
       {
         key: "action",

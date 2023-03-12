@@ -7,7 +7,9 @@ import {
     Grid,
     Modal,
     Typography,
-  } from "@mui/material";
+  } from "@mui/material"
+
+import { useHistory } from "react-router-dom"
 import { useDispatch } from "react-redux"  
 import { makeStyles } from '@mui/styles'
 
@@ -49,6 +51,7 @@ const useStyles = makeStyles({
 })
 
   function Summary({ itemsInCart }: Props) {
+    const history = useHistory()
     const classes = useStyles()
     const dispatch = useDispatch()
 
@@ -61,8 +64,9 @@ const useStyles = makeStyles({
     }
 
     const handleClose = () => {
+        dispatch(clearCart())
         setOpen(false)
-        dispatch(clearCart)
+        history.push("/catalog")
     }
 
     useEffect(() => {
